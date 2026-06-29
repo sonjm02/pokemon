@@ -526,19 +526,19 @@
     };
 
     const SINGLE_OPTIONS = [
-      { value: 2, label: "x2", desc: "효과가 굉장했다" },
-      { value: 1, label: "x1", desc: "보통 효과" },
+      { value: 0, label: "x0", desc: "효과가 없다" },
       { value: 0.5, label: "x1/2", desc: "효과가 별로" },
-      { value: 0, label: "x0", desc: "효과가 없다" }
+      { value: 1, label: "x1", desc: "보통 효과" },
+      { value: 2, label: "x2", desc: "효과가 굉장했다" }
     ];
 
     const DUAL_OPTIONS = [
-      { value: 4, label: "x4", desc: "이중 약점" },
-      { value: 2, label: "x2", desc: "효과가 굉장" },
-      { value: 1, label: "x1", desc: "보통 효과" },
-      { value: 0.5, label: "x1/2", desc: "반감" },
+      { value: 0, label: "x0", desc: "무효" },
       { value: 0.25, label: "x1/4", desc: "이중 반감" },
-      { value: 0, label: "x0", desc: "무효" }
+      { value: 0.5, label: "x1/2", desc: "반감" },
+      { value: 1, label: "x1", desc: "보통 효과" },
+      { value: 2, label: "x2", desc: "효과가 굉장" },
+      { value: 4, label: "x4", desc: "이중 약점" }
     ];
 
     const state = {
@@ -593,10 +593,6 @@
       return list[Math.floor(Math.random() * list.length)];
     }
 
-    function shuffle(list) {
-      return [...list].sort(() => Math.random() - 0.5);
-    }
-
     function makeQuestion(mode = state.mode) {
       const attack = randomItem(TYPES).key;
       const firstDefense = randomItem(TYPES).key;
@@ -645,7 +641,7 @@
       feedbackEl.textContent = "정답을 고르면 해설이 표시됩니다.";
 
       const options = question.mode === "dual" ? DUAL_OPTIONS : SINGLE_OPTIONS;
-      answersEl.innerHTML = shuffle(options).map(option => `
+      answersEl.innerHTML = options.map(option => `
         <button class="answer" type="button" data-value="${option.value}">
           <strong>${option.label}</strong>
           <small>${option.desc}</small>
