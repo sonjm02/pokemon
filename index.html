@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>포켓몬 상성표 퀴즈</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --good: #dc2626;
+      --bad: #2563eb;
+      --half: #8a9a22;
+      --zero: #64748b;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 34rem),
+        radial-gradient(circle at top right, rgba(220, 38, 38, 0.14), transparent 30rem),
+        var(--bg);
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    .pokeball {
+      flex: 0 0 auto;
+      width: 74px;
+      height: 74px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle, white 0 15%, #334155 16% 20%, white 21% 31%, transparent 32%),
+        linear-gradient(#e11d48 0 45%, #334155 45% 55%, white 55% 100%);
+      box-shadow: var(--shadow);
+      border: 4px solid #334155;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 430px) 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-card { padding: 22px; position: sticky; top: 18px; }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.16s ease;
+    }
+
+    .tab:hover { transform: translateY(-1px); }
+    .tab.active {
+      color: #fff;
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 10px;
+      background: #f8fafc;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .question-box {
+      border-radius: 20px;
+      border: 1px solid #dbeafe;
+      background: linear-gradient(180deg, #eff6ff, #ffffff);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .question-label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .question-text {
+      margin: 0 0 16px;
+      font-size: 1.22rem;
+      font-weight: 900;
+      line-height: 1.45;
+      letter-spacing: -0.03em;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 900;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.28);
+      box-shadow: inset 0 -12px 18px rgba(0,0,0,0.13);
+    }
+
+    .arrow { color: var(--muted); font-weight: 900; }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .answer {
+      min-height: 64px;
+      border: 2px solid var(--line);
+      background: #fff;
+      border-radius: 18px;
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: 0.16s ease;
+    }
+
+    .answer strong { font-size: 1.18rem; }
+    .answer small { color: var(--muted); font-weight: 700; }
+    .answer:hover:not(:disabled) { transform: translateY(-1px); border-color: #93c5fd; }
+    .answer:disabled { cursor: default; }
+    .answer.correct { border-color: #ef4444; background: #fff1f2; }
+    .answer.wrong { border-color: #60a5fa; background: #eff6ff; opacity: 0.78; }
+
+    .feedback {
+      min-height: 58px;
+      padding: 13px 15px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      color: var(--muted);
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .feedback.good { color: #991b1b; background: #fff1f2; border-color: #fecdd3; }
+    .feedback.bad { color: #1e3a8a; background: #eff6ff; border-color: #bfdbfe; }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 900;
+      cursor: pointer;
+      background: #e2e8f0;
+      color: #0f172a;
+      transition: 0.16s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary { background: var(--primary); color: #fff; }
+    .btn.primary:hover { background: var(--primary-dark); }
+    .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+
+    .panel { padding: 22px; overflow: hidden; }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #475569;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.good { background: var(--good); }
+    .dot.half { background: var(--half); }
+    .dot.zero { background: var(--zero); }
+
+    .chart-wrap {
+      width: 100%;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: max-content;
+      min-width: 100%;
+    }
+
+    th, td {
+      border-right: 1px solid #d1d5db;
+      border-bottom: 1px solid #d1d5db;
+      text-align: center;
+      min-width: 46px;
+      height: 42px;
+      padding: 5px;
+      font-size: 0.82rem;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #e0f2fe;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    th:first-child {
+      left: 0;
+      z-index: 2;
+      min-width: 76px;
+      background: #fee2e2;
+    }
+
+    td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #fee2e2;
+      font-weight: 900;
+      color: #7f1d1d;
+      min-width: 76px;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+
+    .cell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      font-weight: 1000;
+    }
+
+    .m2 { color: var(--good); border: 2px solid var(--good); background: #fff1f2; }
+    .m05 { color: var(--half); }
+    .m0 { color: var(--zero); }
+    .m1 { color: #cbd5e1; }
+
+    .type-normal { background: #9299a1; }
+    .type-fire { background: #ff9d55; }
+    .type-water { background: #5090d6; }
+    .type-grass { background: #63bc5a; }
+    .type-electric { background: #f4d23c; color: #2b2b2b; text-shadow: none; }
+    .type-ice { background: #73cec0; color: #123; text-shadow: none; }
+    .type-fighting { background: #ce416b; }
+    .type-poison { background: #aa6bc8; }
+    .type-ground { background: #d97845; }
+    .type-flying { background: #8fa9de; }
+    .type-psychic { background: #fa7179; }
+    .type-bug { background: #91c12f; }
+    .type-rock { background: #c5b78c; color: #2b2b2b; text-shadow: none; }
+    .type-ghost { background: #5269ad; }
+    .type-dragon { background: #0b6dc3; }
+    .type-dark { background: #5a5465; }
+    .type-steel { background: #5a8ea2; }
+    .type-fairy { background: #ec8fe6; color: #3b1237; text-shadow: none; }
+
+    .mini-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 880px) {
+      header { align-items: center; }
+      .pokeball { width: 58px; height: 58px; }
+      .grid { grid-template-columns: 1fr; }
+      .quiz-card { position: static; }
+      .answers { grid-template-columns: 1fr; }
+      .panel-head { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <h1>포켓몬 상성표 퀴즈</h1>
+        <p class="lead">공격 기술의 타입과 공격받는 포켓몬의 타입을 보고 효과 배율을 맞히는 연습 앱입니다. 단일 타입으로 기본 상성을 익히고, 복합 타입 모드로 실제 배틀처럼 곱셈 상성까지 연습할 수 있습니다.</p>
+      </div>
+      <div class="pokeball" aria-hidden="true"></div>
+    </header>
+
+    <section class="grid">
+      <aside class="card quiz-card">
+        <h2 class="section-title">문제 풀기</h2>
+        <div class="tabs" role="tablist" aria-label="문제 모드 선택">
+          <button class="tab active" data-mode="single" type="button">단일 타입</button>
+          <button class="tab" data-mode="dual" type="button">복합 타입</button>
+        </div>
+
+        <div class="stats" aria-label="통계">
+          <div class="stat"><strong id="totalCount">0</strong><span>푼 문제</span></div>
+          <div class="stat"><strong id="accuracy">0%</strong><span>정답률</span></div>
+          <div class="stat"><strong id="streak">0</strong><span>연속 정답</span></div>
+        </div>
+
+        <div class="question-box">
+          <p class="question-label">이번 문제</p>
+          <p id="questionText" class="question-text">공격 기술의 효과는?</p>
+          <div id="typeBadges" class="badge-row"></div>
+        </div>
+
+        <div id="answers" class="answers"></div>
+        <div id="feedback" class="feedback">정답을 고르면 해설이 표시됩니다.</div>
+
+        <div class="actions">
+          <button id="nextBtn" class="btn primary" type="button">다음 문제</button>
+          <button id="wrongBtn" class="btn" type="button">틀린 문제 다시</button>
+          <button id="resetBtn" class="btn ghost" type="button">기록 초기화</button>
+        </div>
+      </aside>
+
+      <section class="card panel">
+        <div class="panel-head">
+          <div>
+            <h2 class="section-title">상성표</h2>
+            <p class="hint">왼쪽은 공격 기술의 타입, 위쪽은 공격받는 포켓몬의 타입입니다. 빈칸은 보통 효과, 즉 x1입니다.</p>
+          </div>
+        </div>
+
+        <div class="legend" aria-label="상성표 범례">
+          <span class="legend-item"><span class="dot good"></span>x2 효과가 굉장</span>
+          <span class="legend-item"><span class="dot half"></span>x1/2 효과가 별로</span>
+          <span class="legend-item"><span class="dot zero"></span>x0 효과 없음</span>
+          <span class="legend-item">빈칸 x1 보통</span>
+        </div>
+
+        <div class="chart-wrap">
+          <table id="typeChart" aria-label="포켓몬 타입 상성표"></table>
+        </div>
+
+        <p class="mini-note">복합 타입에서는 두 방어 타입에 대한 배율을 곱합니다. 예를 들어 전기 공격이 물/비행 타입에게는 x2 × x2 = x4가 됩니다. 무효가 하나라도 있으면 최종 배율은 x0입니다.</p>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const TYPES = [
+      { key: "normal", ko: "노말" },
+      { key: "fire", ko: "불꽃" },
+      { key: "water", ko: "물" },
+      { key: "grass", ko: "풀" },
+      { key: "electric", ko: "전기" },
+      { key: "ice", ko: "얼음" },
+      { key: "fighting", ko: "격투" },
+      { key: "poison", ko: "독" },
+      { key: "ground", ko: "땅" },
+      { key: "flying", ko: "비행" },
+      { key: "psychic", ko: "에스퍼" },
+      { key: "bug", ko: "벌레" },
+      { key: "rock", ko: "바위" },
+      { key: "ghost", ko: "고스트" },
+      { key: "dragon", ko: "드래곤" },
+      { key: "dark", ko: "악" },
+      { key: "steel", ko: "강철" },
+      { key: "fairy", ko: "페어리" }
+    ];
+
+    const TYPE_MAP = Object.fromEntries(TYPES.map(type => [type.key, type]));
+
+    const CHART = {
+      normal: { rock: 0.5, ghost: 0, steel: 0.5 },
+      fire: { fire: 0.5, water: 0.5, grass: 2, ice: 2, bug: 2, rock: 0.5, dragon: 0.5, steel: 2 },
+      water: { fire: 2, water: 0.5, grass: 0.5, ground: 2, rock: 2, dragon: 0.5 },
+      grass: { fire: 0.5, water: 2, grass: 0.5, poison: 0.5, ground: 2, flying: 0.5, bug: 0.5, rock: 2, dragon: 0.5, steel: 0.5 },
+      electric: { water: 2, grass: 0.5, electric: 0.5, ground: 0, flying: 2, dragon: 0.5 },
+      ice: { fire: 0.5, water: 0.5, grass: 2, ice: 0.5, ground: 2, flying: 2, dragon: 2, steel: 0.5 },
+      fighting: { normal: 2, ice: 2, poison: 0.5, flying: 0.5, psychic: 0.5, bug: 0.5, rock: 2, ghost: 0, dark: 2, steel: 2, fairy: 0.5 },
+      poison: { grass: 2, poison: 0.5, ground: 0.5, rock: 0.5, ghost: 0.5, steel: 0, fairy: 2 },
+      ground: { fire: 2, grass: 0.5, electric: 2, poison: 2, flying: 0, bug: 0.5, rock: 2, steel: 2 },
+      flying: { grass: 2, electric: 0.5, fighting: 2, bug: 2, rock: 0.5, steel: 0.5 },
+      psychic: { fighting: 2, poison: 2, psychic: 0.5, dark: 0, steel: 0.5 },
+      bug: { fire: 0.5, grass: 2, fighting: 0.5, poison: 0.5, flying: 0.5, psychic: 2, ghost: 0.5, dark: 2, steel: 0.5, fairy: 0.5 },
+      rock: { fire: 2, ice: 2, fighting: 0.5, ground: 0.5, flying: 2, bug: 2, steel: 0.5 },
+      ghost: { normal: 0, psychic: 2, ghost: 2, dark: 0.5 },
+      dragon: { dragon: 2, steel: 0.5, fairy: 0 },
+      dark: { fighting: 0.5, psychic: 2, ghost: 2, dark: 0.5, fairy: 0.5 },
+      steel: { fire: 0.5, water: 0.5, electric: 0.5, ice: 2, rock: 2, steel: 0.5, fairy: 2 },
+      fairy: { fire: 0.5, fighting: 2, poison: 0.5, dragon: 2, dark: 2, steel: 0.5 }
+    };
+
+    const SINGLE_OPTIONS = [
+      { value: 2, label: "x2", desc: "효과가 굉장했다" },
+      { value: 1, label: "x1", desc: "보통 효과" },
+      { value: 0.5, label: "x1/2", desc: "효과가 별로" },
+      { value: 0, label: "x0", desc: "효과가 없다" }
+    ];
+
+    const DUAL_OPTIONS = [
+      { value: 4, label: "x4", desc: "이중 약점" },
+      { value: 2, label: "x2", desc: "효과가 굉장" },
+      { value: 1, label: "x1", desc: "보통 효과" },
+      { value: 0.5, label: "x1/2", desc: "반감" },
+      { value: 0.25, label: "x1/4", desc: "이중 반감" },
+      { value: 0, label: "x0", desc: "무효" }
+    ];
+
+    const state = {
+      mode: "single",
+      current: null,
+      answered: false,
+      total: Number(localStorage.getItem("pokemonQuizTotal") || 0),
+      correct: Number(localStorage.getItem("pokemonQuizCorrect") || 0),
+      streak: Number(localStorage.getItem("pokemonQuizStreak") || 0),
+      wrongQueue: JSON.parse(localStorage.getItem("pokemonQuizWrongQueue") || "[]")
+    };
+
+    const $ = selector => document.querySelector(selector);
+    const answersEl = $("#answers");
+    const feedbackEl = $("#feedback");
+
+    function multiplier(attack, defense) {
+      return CHART[attack]?.[defense] ?? 1;
+    }
+
+    function totalMultiplier(attack, defenses) {
+      return defenses.reduce((value, defense) => value * multiplier(attack, defense), 1);
+    }
+
+    function typeBadge(typeKey) {
+      const type = TYPE_MAP[typeKey];
+      return `<span class="badge type-${type.key}">${type.ko}</span>`;
+    }
+
+    function formatMultiplier(value) {
+      if (value === 0.25) return "x1/4";
+      if (value === 0.5) return "x1/2";
+      return `x${value}`;
+    }
+
+    function explain(question) {
+      const attackName = TYPE_MAP[question.attack].ko;
+      const defenseNames = question.defenses.map(key => TYPE_MAP[key].ko).join("/");
+      const parts = question.defenses.map(defense => {
+        const value = multiplier(question.attack, defense);
+        return `${attackName}→${TYPE_MAP[defense].ko} ${formatMultiplier(value)}`;
+      });
+
+      if (question.defenses.length === 1) {
+        return `${attackName} 공격이 ${defenseNames} 타입에게 주는 효과는 ${formatMultiplier(question.answer)}입니다.`;
+      }
+
+      return `${parts.join(" × ")} 이므로 최종 효과는 ${formatMultiplier(question.answer)}입니다.`;
+    }
+
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function shuffle(list) {
+      return [...list].sort(() => Math.random() - 0.5);
+    }
+
+    function makeQuestion(mode = state.mode) {
+      const attack = randomItem(TYPES).key;
+      const firstDefense = randomItem(TYPES).key;
+      const defenses = [firstDefense];
+
+      if (mode === "dual") {
+        let secondDefense = randomItem(TYPES).key;
+        while (secondDefense === firstDefense) secondDefense = randomItem(TYPES).key;
+        defenses.push(secondDefense);
+      }
+
+      return {
+        mode,
+        attack,
+        defenses,
+        answer: totalMultiplier(attack, defenses)
+      };
+    }
+
+    function saveStats() {
+      localStorage.setItem("pokemonQuizTotal", String(state.total));
+      localStorage.setItem("pokemonQuizCorrect", String(state.correct));
+      localStorage.setItem("pokemonQuizStreak", String(state.streak));
+      localStorage.setItem("pokemonQuizWrongQueue", JSON.stringify(state.wrongQueue.slice(0, 40)));
+    }
+
+    function updateStats() {
+      $("#totalCount").textContent = state.total;
+      $("#accuracy").textContent = state.total ? `${Math.round((state.correct / state.total) * 100)}%` : "0%";
+      $("#streak").textContent = state.streak;
+    }
+
+    function renderQuestion(question) {
+      state.current = question;
+      state.answered = false;
+
+      const defenseText = question.defenses.map(key => TYPE_MAP[key].ko).join("/");
+      $("#questionText").textContent = `${TYPE_MAP[question.attack].ko} 타입 기술로 ${defenseText} 타입 포켓몬을 공격하면?`;
+      $("#typeBadges").innerHTML = [
+        typeBadge(question.attack),
+        '<span class="arrow">→</span>',
+        ...question.defenses.map(typeBadge)
+      ].join("");
+
+      feedbackEl.className = "feedback";
+      feedbackEl.textContent = "정답을 고르면 해설이 표시됩니다.";
+
+      const options = question.mode === "dual" ? DUAL_OPTIONS : SINGLE_OPTIONS;
+      answersEl.innerHTML = shuffle(options).map(option => `
+        <button class="answer" type="button" data-value="${option.value}">
+          <strong>${option.label}</strong>
+          <small>${option.desc}</small>
+        </button>
+      `).join("");
+
+      document.querySelectorAll(".answer").forEach(button => {
+        button.addEventListener("click", () => checkAnswer(Number(button.dataset.value), button));
+      });
+    }
+
+    function checkAnswer(selected, selectedButton) {
+      if (state.answered) return;
+      state.answered = true;
+
+      const correct = selected === state.current.answer;
+      state.total += 1;
+      if (correct) {
+        state.correct += 1;
+        state.streak += 1;
+        feedbackEl.className = "feedback good";
+        feedbackEl.textContent = `정답입니다. ${explain(state.current)}`;
+      } else {
+        state.streak = 0;
+        state.wrongQueue.unshift(state.current);
+        feedbackEl.className = "feedback bad";
+        feedbackEl.textContent = `아쉽습니다. 정답은 ${formatMultiplier(state.current.answer)}입니다. ${explain(state.current)}`;
+      }
+
+      document.querySelectorAll(".answer").forEach(button => {
+        const value = Number(button.dataset.value);
+        button.disabled = true;
+        if (value === state.current.answer) button.classList.add("correct");
+        if (button === selectedButton && !correct) button.classList.add("wrong");
+      });
+
+      saveStats();
+      updateStats();
+    }
+
+    function renderChart() {
+      const table = $("#typeChart");
+      const header = `<thead><tr><th>공격\\방어</th>${TYPES.map(type => `<th>${type.ko}</th>`).join("")}</tr></thead>`;
+      const body = `<tbody>${TYPES.map(attack => `
+        <tr>
+          <td>${attack.ko}</td>
+          ${TYPES.map(defense => {
+            const value = multiplier(attack.key, defense.key);
+            const label = value === 2 ? "○" : value === 0.5 ? "△" : value === 0 ? "×" : "";
+            const cls = value === 2 ? "m2" : value === 0.5 ? "m05" : value === 0 ? "m0" : "m1";
+            const title = `${attack.ko} → ${defense.ko}: ${formatMultiplier(value)}`;
+            return `<td title="${title}"><span class="cell ${cls}">${label}</span></td>`;
+          }).join("")}
+        </tr>
+      `).join("")}</tbody>`;
+      table.innerHTML = header + body;
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      document.querySelectorAll(".tab").forEach(button => {
+        button.classList.toggle("active", button.dataset.mode === mode);
+      });
+      renderQuestion(makeQuestion(mode));
+    }
+
+    document.querySelectorAll(".tab").forEach(button => {
+      button.addEventListener("click", () => setMode(button.dataset.mode));
+    });
+
+    $("#nextBtn").addEventListener("click", () => renderQuestion(makeQuestion()));
+
+    $("#wrongBtn").addEventListener("click", () => {
+      if (state.wrongQueue.length === 0) {
+        feedbackEl.className = "feedback";
+        feedbackEl.textContent = "아직 다시 풀 틀린 문제가 없습니다.";
+        return;
+      }
+      const question = state.wrongQueue.shift();
+      state.mode = question.mode;
+      document.querySelectorAll(".tab").forEach(button => {
+        button.classList.toggle("active", button.dataset.mode === state.mode);
+      });
+      saveStats();
+      renderQuestion(question);
+    });
+
+    $("#resetBtn").addEventListener("click", () => {
+      const ok = confirm("푼 문제 수, 정답률, 연속 정답, 틀린 문제 기록을 모두 초기화할까요?");
+      if (!ok) return;
+      state.total = 0;
+      state.correct = 0;
+      state.streak = 0;
+      state.wrongQueue = [];
+      saveStats();
+      updateStats();
+      feedbackEl.className = "feedback";
+      feedbackEl.textContent = "기록을 초기화했습니다.";
+    });
+
+    renderChart();
+    updateStats();
+    renderQuestion(makeQuestion());
+  </script>
+</body>
+</html>
