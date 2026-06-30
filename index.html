@@ -657,29 +657,38 @@
       if (state.answered) return;
       state.answered = true;
 
-      const correct = selected === state.current.answer;
+      const answeredQuestion = state.current;
+      const correct = selected === answeredQuestion.answer;
       state.total += 1;
       if (correct) {
         state.correct += 1;
         state.streak += 1;
         feedbackEl.className = "feedback good";
-        feedbackEl.textContent = `정답입니다. ${explain(state.current)}`;
+        feedbackEl.textContent = `정답입니다. ${explain(answeredQuestion)} 잠시 후 다음 문제로 넘어갑니다.`;
       } else {
         state.streak = 0;
-        state.wrongQueue.unshift(state.current);
+        state.wrongQueue.unshift(answeredQuestion);
         feedbackEl.className = "feedback bad";
-        feedbackEl.textContent = `아쉽습니다. 정답은 ${formatMultiplier(state.current.answer)}입니다. ${explain(state.current)}`;
+        feedbackEl.textContent = `아쉽습니다. 정답은 ${formatMultiplier(answeredQuestion.answer)}입니다. ${explain(answeredQuestion)}`;
       }
 
       document.querySelectorAll(".answer").forEach(button => {
         const value = Number(button.dataset.value);
         button.disabled = true;
-        if (value === state.current.answer) button.classList.add("correct");
+        if (value === answeredQuestion.answer) button.classList.add("correct");
         if (button === selectedButton && !correct) button.classList.add("wrong");
       });
 
       saveStats();
       updateStats();
+
+      if (correct) {
+        setTimeout(() => {
+          if (state.current === answeredQuestion && state.answered) {
+            renderQuestion(makeQuestion());
+          }
+        }, 850);
+      }
     }
 
     function renderChart() {
