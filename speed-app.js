@@ -84,8 +84,28 @@ function makeChoices(answer) {
   return choices.sort((a, b) => a - b);
 }
 
+function getCelebrationTarget() {
+  const mode = $('#answerMode').value;
+  if (mode === 'direct') return $('#directForm');
+  return $('#answers');
+}
+
+function placeCelebration() {
+  const box = $('#celebration');
+  const target = getCelebrationTarget();
+  if (!target) return;
+
+  const rect = target.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+
+  box.style.left = `${x}px`;
+  box.style.top = `${Math.max(20, y - 26)}px`;
+}
+
 function celebrate() {
   const box = $('#celebration');
+  placeCelebration();
   box.innerHTML = `<div class="toast">정답!</div><span class="spark s1">★</span><span class="spark s2">✦</span><span class="spark s3">✓</span>`;
   box.classList.remove('show');
   void box.offsetWidth;
