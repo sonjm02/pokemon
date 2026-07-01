@@ -1,0 +1,136 @@
+window.BASE_CSV = `garchomp|1|한카리아스|Garchomp|드래곤/땅|102
+mimikyu|2|따라큐|Mimikyu|고스트/페어리|96
+meowscarada|3|마스카나|Meowscarada|풀/악|123
+metagross|4|메타그로스|Metagross|강철/에스퍼|70
+archaludon|5|브리두라스|Archaludon|강철/드래곤|85
+raichu|6|라이츄|Raichu|전기|110
+charizard|7|리자몽|Charizard|불꽃/비행|100
+alolan-ninetales|8|알로라 나인테일|Ninetales [Alolan Form]|얼음/페어리|109
+hippowdon|9|하마돈|Hippowdon|땅|47
+staraptor|10|찌르호크|Staraptor|노말/비행|100
+corviknight|11|아머까오|Corviknight|비행/강철|67
+blaziken|12|번치코|Blaziken|불꽃/격투|80
+hydreigon|13|삼삼드래|Hydreigon|악/드래곤|98
+primarina|14|누리레느|Primarina|물/페어리|60
+gyarados|15|갸라도스|Gyarados|물/비행|81
+basculegion|16|대쓰여너|Basculegion|물/고스트|78
+swampert|17|대짱이|Swampert|물/땅|60
+delphox|18|마폭시|Delphox|불꽃/에스퍼|104
+glimmora|19|킬라플로르|Glimmora|바위/독|86
+wash-rotom|20|워시로토무|Wash Rotom|전기/물|86
+dragonite|21|망나뇽|Dragonite|드래곤/비행|80
+grimmsnarl|22|오롱털|Grimmsnarl|악/페어리|60
+pelipper|23|패리퍼|Pelipper|물/비행|65
+gholdengo|24|타부자고|Gholdengo|강철/고스트|84
+mawile|25|입치트|Mawile|강철/페어리|50
+skeledirge|26|라우드본|Skeledirge|불꽃/고스트|66
+kingambit|27|대도각참|Kingambit|악/강철|50
+greninja|28|개굴닌자|Greninja|물/악|122
+gengar|29|팬텀|Gengar|고스트/독|110
+dragalge|30|드래캄|Dragalge|독/드래곤|44
+aegislash|31|킬가르도|Aegislash|강철/고스트|60
+dragapult|32|드래펄트|Dragapult|드래곤/고스트|142
+scizor|33|핫삼|Scizor|벌레/강철|65
+hisuian-samurott|34|히스이 대검귀|Samurott [Hisuian Form]|물/악|85
+ceruledge|35|파라블레이즈|Ceruledge|불꽃/고스트|85
+volcarona|36|불카모스|Volcarona|벌레/불꽃|100
+lopunny|37|이어롭|Lopunny|노말|105
+starmie|38|아쿠스타|Starmie|물/에스퍼|115
+vanilluxe|39|배바닐라|Vanilluxe|얼음|79
+umbreon|40|블래키|Umbreon|악|65
+meganium|41|메가니움|Meganium|풀|80
+venusaur|42|이상해꽃|Venusaur|풀/독|80
+sneasler|43|포푸니크|Sneasler|격투/독|120
+blastoise|44|거북왕|Blastoise|물|78
+annihilape|45|저승갓숭|Annihilape|격투/고스트|90
+lucario|46|루카리오|Lucario|격투/강철|90
+sylveon|47|님피아|Sylveon|페어리|60
+mamoswine|48|맘모꾸리|Mamoswine|얼음/땅|80
+whimsicott|49|엘풍|Whimsicott|풀/페어리|116
+heat-rotom|50|히트로토무|Heat Rotom|전기/불꽃|86
+bellibolt|51|찌리배리|Bellibolt|전기|45
+toxapex|52|더시마사리|Toxapex|독/물|35
+tyranitar|53|마기라스|Tyranitar|바위/악|61
+clefable|54|픽시|Clefable|페어리|60
+excadrill|55|몰드류|Excadrill|땅/강철|88
+azumarill|56|마릴리|Azumarill|물/페어리|50
+hisuian-zoroark|57|히스이 조로아크|Zoroark [Hisuian Form]|노말/고스트|110
+floette|58|플라엣테|Floette|페어리|52
+froslass|59|눈여아|Froslass|얼음/고스트|110
+milotic|60|밀로틱|Milotic|물|81
+espathra|61|클레스퍼트라|Espathra|에스퍼|105
+ditto|62|메타몽|Ditto|노말|48
+araquanid|63|깨비물거미|Araquanid|물/벌레|42
+skarmory|64|무장조|Skarmory|강철/비행|70
+gardevoir|65|가디안|Gardevoir|에스퍼/페어리|80
+snorlax|66|잠만보|Snorlax|노말|30
+sceptile|67|나무킹|Sceptile|풀|120
+sinistcha|68|그우린차|Sinistcha|풀/고스트|70
+eelektross|69|저리더프|Eelektross|전기|50
+serperior|70|샤로다|Serperior|풀|113
+gallade|71|엘레이드|Gallade|에스퍼/격투|80
+kangaskhan|72|캥카|Kangaskhan|노말|90
+incineroar|73|어흥염|Incineroar|불꽃/악|60
+kleavor|74|사마자르|Kleavor|벌레/바위|85
+scovillain|75|스코빌런|Scovillain|풀/불꽃|75
+sableye|76|깜까미|Sableye|악/고스트|50
+armarouge|77|카디나르마|Armarouge|불꽃/에스퍼|75
+maushold|78|파밀리쥐|Maushold|노말|111
+hatterene|79|브리무음|Hatterene|에스퍼/페어리|29
+scolipede|80|펜드라|Scolipede|벌레/독|112
+banette|81|다크펫|Banette|고스트|65
+slowbro|82|야도란|Slowbro|물/에스퍼|30
+maushold-r83|83|파밀리쥐|Maushold|노말|111
+hisuian-goodra|84|히스이 미끄래곤|Goodra [Hisuian Form]|강철/드래곤|60
+empoleon|85|엠페르트|Empoleon|물/강철|60
+polteageist|86|포트데스|Polteageist|고스트|70
+chandelure|87|샹델라|Chandelure|고스트/불꽃|80
+galarian-slowking|88|가라르 야도킹|Slowking [Galarian Form]|독/에스퍼|30
+fancy-vivillon|89|비비용|Vivillon [Fancy Pattern]|벌레/비행|89
+pyroar|90|화염레오|Pyroar|불꽃/노말|106
+toucannon|91|왕큰부리|Toucannon|노말/비행|60
+hisuian-arcanine|92|히스이 윈디|Arcanine [Hisuian Form]|불꽃/바위|90
+chesnaught|93|브리가론|Chesnaught|풀/격투|64
+gliscor|94|글라이온|Gliscor|땅/비행|95
+conkeldurr|95|노보청|Conkeldurr|격투|45
+orthworm|96|꿈트렁|Orthworm|강철|65
+vaporeon|97|샤미드|Vaporeon|물|65
+palafin|98|돌핀맨|Palafin|물|100
+heliolisk|99|일레도리자드|Heliolisk|전기/노말|109
+basculegion-female|100|대쓰여너♀|Basculegion [Female]|물/고스트|78`;
+
+window.MEGA_CSV = `garchomp|메가한카리아스|Mega Garchomp|드래곤/땅|92
+metagross|메가메타그로스|Mega Metagross|강철/에스퍼|110
+raichu|메가라이츄X|Mega Raichu X|전기|110
+raichu|메가라이츄Y|Mega Raichu Y|전기|130
+charizard|메가리자몽X|Mega Charizard X|불꽃/드래곤|100
+charizard|메가리자몽Y|Mega Charizard Y|불꽃/비행|100
+staraptor|메가찌르호크|Mega Staraptor|격투/비행|110
+blaziken|메가번치코|Mega Blaziken|불꽃/격투|100
+gyarados|메가갸라도스|Mega Gyarados|물/악|81
+swampert|메가대짱이|Mega Swampert|물/땅|70
+delphox|메가마폭시|Mega Delphox|불꽃/에스퍼|134
+glimmora|메가킬라플로르|Mega Glimmora|바위/독|101
+dragonite|메가망나뇽|Mega Dragonite|드래곤/비행|100
+mawile|메가입치트|Mega Mawile|강철/페어리|50
+greninja|메가개굴닌자|Mega Greninja|물/악|142
+gengar|메가팬텀|Mega Gengar|고스트/독|130
+dragalge|메가드래캄|Mega Dragalge|독/드래곤|44
+scizor|메가핫삼|Mega Scizor|벌레/강철|75
+lopunny|메가이어롭|Mega Lopunny|노말/격투|135
+starmie|메가아쿠스타|Mega Starmie|물/에스퍼|120
+meganium|메가메가니움|Mega Meganium|풀|80
+venusaur|메가이상해꽃|Mega Venusaur|풀/독|80
+blastoise|메가거북왕|Mega Blastoise|물|78
+lucario|메가루카리오|Mega Lucario|격투/강철|112
+tyranitar|메가마기라스|Mega Tyranitar|바위/악|71
+floette|메가플라엣테|Mega Floette|페어리|102
+froslass|메가눈여아|Mega Froslass|얼음/고스트|120
+gardevoir|메가가디안|Mega Gardevoir|에스퍼/페어리|100
+sceptile|메가나무킹|Mega Sceptile|풀/드래곤|145
+gallade|메가엘레이드|Mega Gallade|에스퍼/격투|110
+kangaskhan|메가캥카|Mega Kangaskhan|노말|100
+sableye|메가깜까미|Mega Sableye|악/고스트|20
+banette|메가다크펫|Mega Banette|고스트|75
+slowbro|메가야도란|Mega Slowbro|물/에스퍼|30
+pyroar|메가화염레오|Mega Pyroar|불꽃/노말|126`;
